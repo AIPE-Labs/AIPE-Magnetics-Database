@@ -40,7 +40,8 @@ def test_manifest_documentation_and_evidence_paths_exist():
         if ref.startswith("https://"):
             continue
         assert (ROOT / ref).exists(), f"aipe.yaml references missing path {ref}"
-    assert manifest["license"] == "NOASSERTION"
+    assert manifest["license"] == "MIT"
+    assert "MIT License" in (ROOT / "LICENSE").read_text(encoding="utf-8")
     assert manifest["compatibility"]["integration"] == "native"
     standalone = manifest["extensions"]["aipe.magnetics"]["standalone_operation"]
     assert not any(standalone.values()), "standalone operation must not require orchestrator, registry, experts, commercial software or LLM keys"

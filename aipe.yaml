@@ -7,7 +7,7 @@ description: "Standardised, provenance-tracked magnetic data: material propertie
 status: experimental
 maturity: prototype
 repository: https://github.com/FulongLi/AIPE-Magnetics-Database
-license: NOASSERTION
+license: MIT
 capabilities:
   - magnetics-record-schema
   - magnetics-data-import
@@ -78,7 +78,7 @@ connectors:
     tool: mcp-python-sdk
     type: mcp
     repository: https://github.com/FulongLi/AIPE-Magnetics-Database
-    license: NOASSERTION
+    license: MIT
     status: experimental
     supported_versions: ["mcp>=2,<3"]
     platforms: [linux, windows, macos]
@@ -99,7 +99,7 @@ validation:
   limitations:
     - "Third-party values are unreviewed; many MAS values originate from manufacturer datasheets whose terms are not covered by the MAS licence."
     - "Paderborn LEA records are GPL-3.0-only and kept as a separate copyleft subtree."
-    - "Repository licence remains NOASSERTION pending owner decision."
+    - "Code is MIT; every data record keeps the licence of its source (LICENSING.md), and the curated datasheet catalogue stays NOASSERTION."
 documentation:
   - README.md
   - CHANGELOG.md

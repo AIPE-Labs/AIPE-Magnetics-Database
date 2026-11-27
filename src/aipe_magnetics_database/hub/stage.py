@@ -1,6 +1,6 @@
 """Build a Hugging Face release tree (``raw/``, ``normalized/v0.2/``, ``manifests/``, ``README.md``) from a checkout.
 
-``aipe-magnetics-db hub stage --out DIR [--source ID ...] [--allow-download] [--cache DIR]``
+``aipe-magnetics-db hub stage --out DIR [--source ID ...] [--allow-download] [--cache DIR] [--no-tabular]``
 
 * Only sources whose registry status is ``integrated`` **and** whose licence permits redistribution are staged
   (:func:`publishable`); everything else appears in ``manifests/sources.json`` as metadata only, with the reason.
@@ -8,6 +8,8 @@
   verifying download cache at the pinned URL (``--allow-download``). Every file is hashed again before staging.
 * Normalised records are copied unchanged from ``data/normalized/<dir>`` - including the large ``tables-local/``
   sidecars that are not kept in Git - and every table sidecar is checked against the ``rows_sha256`` of its record.
+* A tabular view of the same records (``tabular/v0.2/<config>/<source-id>.parquet``, :mod:`.tabular`) is written for
+  generic readers such as ``datasets.load_dataset`` and the Hugging Face dataset viewer.
 * Files are hard-linked into the stage when possible (no extra disk space), copied otherwise.
 
 The stage never modifies ``data/``; the manifests are deterministic except for ``generated_at``.
@@ -100,6 +102,11 @@ class Stage:
         self.files[rel] = entry
         return entry
 
+    def register(self, rel: str) -> None:
+        """Record a file that was written directly into the stage."""
+        path = self.out / rel
+        self.files[rel] = {"sha256": sha256_path(path), "size": path.stat().st_size}
+
     def write(self, rel: str, data: bytes) -> None:
         path = self.out / rel
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -169,7 +176,9 @@ def _normalized(root: Path, source: dict[str, Any], stage: Stage, *, require_loc
                                 f"'aipe-magnetics-db refresh --source {sid} --allow-download' first")
     for rel in rels:
         stage.add(normalized_path(sid, rel), base / rel, sha256=expected.get(rel))
-    return {"index": index, "files": len(rels), "missing_local_tables": missing_local}
+    table_rows = _table_rows(base, index)
+    return {"index": index, "files": len(rels), "missing_local_tables": missing_local,
+            "rows_missing": sum(table_rows.get(rel, 0) for rel in missing_local)}
 
 
 def _dataset_citation(root: Path, source: dict[str, Any], index: dict[str, Any]) -> str | None:
@@ -191,6 +200,17 @@ def _waveform_checksums(base: Path, index: dict[str, Any]) -> dict[str, str]:
     return out
 
 
+def _table_rows(base: Path, index: dict[str, Any]) -> dict[str, int]:
+    """``{rows_file: row_count}`` of the measurement records whose rows live in a sidecar."""
+    out: dict[str, int] = {}
+    for rel in index["shards"].get("measurements", []):
+        for line in (base / rel).read_text(encoding="utf-8").splitlines():
+            table = json.loads(line).get("extensions", {}).get("aipe.table") or {}
+            if table.get("rows_file"):
+                out[table["rows_file"]] = table["row_count"]
+    return out
+
+
 def _table_checksums(base: Path, index: dict[str, Any]) -> dict[str, str]:
     out: dict[str, str] = {}
     for rel in index["shards"].get("measurements", []):
@@ -203,8 +223,11 @@ def _table_checksums(base: Path, index: dict[str, Any]) -> dict[str, str]:
 
 def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str] | None = None, allow_download: bool = False,
                 cache_dir: str | None = None, require_local_tables: bool = True, repo_id: str = DEFAULT_REPO_ID,
-                log: Callable[[str], None] = print) -> dict[str, Any]:
-    """Write the release tree to ``out`` (which must be empty or absent); returns the dataset index."""
+                tabular: bool = True, log: Callable[[str], None] = print) -> dict[str, Any]:
+    """Write the release tree to ``out`` (which must be empty or absent); returns the dataset index.
+
+    ``tabular=False`` leaves out the Parquet view (which needs pyarrow); the dataset card then declares no configs.
+    """
     from aipe_magnetics_database.data.sources.cache import LocalCache
     from aipe_magnetics_database.ingest.pipeline import repository_root
     from aipe_magnetics_database.ingest.quality import run_checks
@@ -221,7 +244,7 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
     if unknown:
         raise ValueError(f"unknown source id(s): {sorted(unknown)}")
 
-    entries, per_source = [], []
+    entries, per_source, staged_sources = [], [], []
     for source in registry.SOURCES:
         ok, reason = publishable(source)
         selected = ok and (not chosen or source["id"] in chosen)
@@ -236,6 +259,8 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         log(f"[{source['id']}] staging normalised records ...")
         norm = _normalized(root, source, stage, require_local_tables=require_local_tables)
         index = norm["index"]
+        staged_sources.append(source)
+        rows_described = sum(index["table_rows"].values())
         archived = [f for f in raw if f.get("available", True)]
         raw_bytes = sum(f["size"] for f in archived)
         citation = source.get("citation") or _dataset_citation(root, source, index)
@@ -247,13 +272,25 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         per_source.append({"id": source["id"], "title": source["title"], "license": source["license"], "version": source.get("version"),
                            "url": source["url"], "citation": citation, "redistribution": source.get("redistribution"),
                            "record_counts": index["record_counts"],
-                           "table_rows": index["table_rows"], "raw_files": len(archived), "raw_bytes": raw_bytes,
+                           "table_rows": index["table_rows"], "table_rows_published": rows_described - norm["rows_missing"],
+                           "tables_not_published": len([r for r in norm["missing_local_tables"] if r.startswith("tables")]),
+                           "raw_files": len(archived), "raw_bytes": raw_bytes,
                            "raw_unavailable": [f["upstream_path"] for f in raw if not f.get("available", True)],
                            "retrieved_at": source.get("retrieved_at"),
                            "normalized_files": norm["files"], "normalized_bytes": norm_bytes,
                            "raw_formats": sorted({f["format"] for f in archived}),
                            "normalized_prefix": f"{NORMALIZED_PREFIX}/{source['id']}/", "raw_prefix": f"{RAW_PREFIX}/{source['id']}/"})
 
+    tabular_index = None
+    if tabular:
+        from aipe_magnetics_database.hub.tabular import build_tabular
+        tabular_index = build_tabular(root, staged_sources, out, schema_sources=[s for s in registry.SOURCES if publishable(s)[0]], log=log)
+        for s in per_source:
+            written = tabular_index["sources"].get(s["id"], {}).get("rows_published")
+            if written is not None and written != s["table_rows_published"]:
+                raise DataIntegrityError(f"{s['id']}: tabular view holds {written:,} rows, the normalised records publish {s['table_rows_published']:,}")
+        for rel in tabular_index.pop("files"):
+            stage.register(rel)
     log("running quality checks ...")
     quality = run_checks(root, raw_checksums={k: v["sha256"] for k, v in stage.files.items() if k.startswith(f"{RAW_PREFIX}/")})
     now = _dt.datetime.now(_dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -269,9 +306,12 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         "builder": {"package": "aipe-magnetics-database", "version": __version__, "commit": _git_commit(root),
                     "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database"},
         "sources": per_source, "totals": {"record_counts": dict(sorted(totals.items())), "table_rows": dict(sorted(rows.items())),
+                                          "table_rows_published": sum(s["table_rows_published"] for s in per_source),
+                                          "tables_not_published": sum(s["tables_not_published"] for s in per_source),
                                           "raw_bytes": sum(s["raw_bytes"] for s in per_source),
                                           "normalized_bytes": sum(s["normalized_bytes"] for s in per_source)},
         "quality_summary": quality["summary"],
+        **({"tabular": tabular_index} if tabular_index else {}),
         "note": "Each source keeps its own licence. Schema validity is not proof of experimental accuracy.",
     }
     stage.write(f"{MANIFEST_PREFIX}/sources.json", dumps_pretty(entries).encode("utf-8"))

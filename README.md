@@ -11,6 +11,8 @@ experimental measurements.
 Original files, the normalised records and large tables are published on Hugging Face as
 [**FulongLi/AIPE-Magnetics-Dataset**](https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset); this repository
 builds, validates and publishes that dataset and reads it back at a pinned commit ([docs/huggingface.md](docs/huggingface.md)).
+From the next release the dataset also carries a Parquet view, so `datasets.load_dataset("FulongLi/AIPE-Magnetics-Dataset",
+"core_loss")` works without this package.
 
 This repository serves data only. Loss models, fitting and component design live in
 [AIPE-Magnetics-Design](https://github.com/FulongLi/AIPE-Magnetics-Design).
@@ -113,6 +115,6 @@ provenance notes before relying on any value.
 - Version 0.3.0 (`aipe-magnetics-database`), schema 0.2.0. Status: prototype; third-party values are unreviewed, and
   schema validation is not an experimental verification.
 - Developer: Fulong Li, Spirit Connect / AIPE Labs.
-- Licence: no licence has been declared for the code yet (`NOASSERTION`). Data keep their source licences
-  ([LICENSING.md](LICENSING.md)).
+- Licence: code under the [MIT licence](LICENSE). Data keep the licence of their source, and AIPE's own data layer is
+  CC BY 4.0 ([LICENSING.md](LICENSING.md)).
 - Changes: [CHANGELOG.md](CHANGELOG.md). Migrating from 0.2: [docs/migration-v0.3.md](docs/migration-v0.3.md).

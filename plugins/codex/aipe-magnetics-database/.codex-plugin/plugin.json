@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/FulongLi/AIPE-Magnetics-Database",
   "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database",
-  "license": "NOASSERTION",
+  "license": "MIT",
   "keywords": ["magnetics", "power-electronics", "core-loss", "ferrite", "dataset", "mcp"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",

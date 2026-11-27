@@ -3,6 +3,21 @@
 
 ## Unreleased
 
+- **Licence**: the code is released under the MIT licence (`LICENSE`); it was `NOASSERTION` before. Third-party data keep
+  the licence of their source and nothing is relicensed. AIPE's own data layer (selection, normalisation, canonical
+  catalogue, quality flags, documentation) is offered under CC BY 4.0 to the extent AIPE holds rights in it. The curated
+  datasheet catalogue stays `NOASSERTION`. Package metadata, `aipe.yaml`, the plugin manifests and
+  [LICENSING.md](LICENSING.md) are updated; `CONTRIBUTING.md` is rewritten for the 0.3 layout and commands.
+- **Hugging Face tabular view** (`hub/tabular.py`, [docs/huggingface.md](docs/huggingface.md)): `hub stage` also writes
+  `tabular/v0.2/<config>/<source-id>.parquet` with named, typed SI columns: `materials`, `material_properties`, `cores`,
+  `measurements` and one config per table quantity. The dataset card declares these configs, so `datasets.load_dataset`
+  and the dataset viewer work without this package (they did not: the row sidecars are JSON arrays without column names
+  and the viewer was switched off). Each row names its measurement, source, data class, duplicate status and licence; one
+  file per source keeps licences apart. Layout `aipe.magnetics.hf-layout/1.1` (additive).
+- Dataset card: reports the table rows that are in the release, not only the rows the records describe (the published
+  release states 2,348,037 rows but holds 867,331, because the 81 large MAS B-H tables were left out), marks such tables
+  `rows_published = false`, and no longer gives a `pip install` from PyPI, where the package is not published.
+
 - **Data Explorer charts**: axes carry the quantity and a display unit (`Core loss Pv [W/m³]`, `Peak flux density B̂ [mT]`,
   °C) instead of column names; a column with more than eight values colours rows by value band (core loss by frequency
   band by default) on a one-hue ramp; material pages open with a chart per quantity drawn from the best-ranked published

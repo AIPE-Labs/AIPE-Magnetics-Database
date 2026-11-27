@@ -18,6 +18,7 @@ Hugging Face only.
 raw/<source-id>/files/...          original files, byte-for-byte (immutable)
 raw/<source-id>/SOURCES.json       pinned URL, version and SHA-256 of every original; upstream LICENSE / NOTICE beside it
 normalized/v0.2/<source-id>/       index.json, record shards, datasets/, tables/ and tables-local/ sidecars
+tabular/v0.2/<config>/<source-id>.parquet   the same values as named, typed columns (see "Tabular view")
 manifests/sources.json             every investigated source: licence, status, published or not and why
 manifests/dataset-index.json       per-source counts, table rows, sizes, formats, licence, citation, retrieval date
 manifests/checksums.json           SHA-256 and size of every file
@@ -29,6 +30,38 @@ README.md, LICENSE.md              dataset card, per-source licences
 `integrated` and whose licence permits redistribution are staged (`hub.stage.publishable`); the rest appear in
 `manifests/sources.json` as metadata only. Records are copied unchanged, so a record's `rows_file` resolves under its
 source prefix on the Hub exactly as in `data/normalized/<directory>/`.
+
+## Tabular view
+
+The normalised records are the authoritative form, but their table rows are JSON arrays without column names, which
+`datasets.load_dataset`, the Hugging Face dataset viewer, pandas and DuckDB cannot read. `hub stage` therefore also
+writes the same values as Parquet (`hub/tabular.py`, layout `aipe.magnetics.tabular/0.1`), and the dataset card
+declares one config per table:
+
+| Config | One row per |
+| --- | --- |
+| `materials` | source material record: identity, class, the properties it reports |
+| `material_properties` | property value with its conditions (temperature, frequency, field, flux density) |
+| `cores` | core shape or manufacturer part |
+| `measurements` | measurement record: quantity, data class, condition ranges, row count, `rows_published` |
+| `core_loss`, `complex_permeability`, `bh_curve`, ... | row of the tables of that quantity |
+
+```python
+from datasets import load_dataset
+rows = load_dataset("FulongLi/AIPE-Magnetics-Dataset", "core_loss", split="train")
+```
+
+- Values are the SI values of the records; nothing is computed, interpolated or dropped. Units and definitions are in
+  the dataset card, in `manifests/dataset-index.json` (`tabular.configs`) and in the Parquet field metadata.
+- Every row carries `measurement_id`, `material_id`, `material`, `data_class`, `status`, `source_id` and `license`.
+  `status` is `primary`, `duplicate` or `derived_view`; keep `primary` to avoid counting a table twice.
+- One file per source and config, so each file keeps the licence of its source.
+- The columns of a quantity config are the union over every publishable source; a column that a record does not report
+  is null.
+- A table whose row sidecar is not in the release is listed in `measurements` with `rows_published = false`, and the
+  card states the number of rows that are published.
+
+The view needs `pyarrow` at staging time (extra `hub`); `hub stage --no-tabular` leaves it out.
 
 ## Publishing (GitHub Actions, Trusted Publisher)
 
@@ -90,7 +123,7 @@ db.get_table("measurement.mas-dmegc-dmr95-0400-bh-cycle", allow_download=True)
 
 | Command | Purpose |
 | --- | --- |
-| `hub stage --out DIR [--source ID] [--allow-download]` | build the release tree |
+| `hub stage --out DIR [--source ID] [--allow-download] [--no-tabular]` | build the release tree, including the tabular view |
 | `hub verify-stage DIR` | re-hash a stage against its checksums |
 | `hub publish DIR [--mode branch|main|pr] [--branch NAME] [--merge] [--dry-run]` | publish (needs Hub write access; normally run by the workflow) |
 | `hub sync [--revision REV]` | record a verified release in `data/huggingface.json` |

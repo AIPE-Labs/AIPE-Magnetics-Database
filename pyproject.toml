@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,9 @@ version = "0.3.0"
 description = "AIPE Magnetics Database: standardised, provenance-tracked magnetic material, core-geometry and measurement data (Magnetic Data Schema v0.2) with query API, CLI and MCP server."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "NOASSERTION" }
+# Code: MIT (LICENSE). The wheel also bundles third-party data under their source licences (LICENSING.md).
+license = "MIT AND Apache-2.0 AND CC-BY-4.0 AND GPL-3.0-only"
+license-files = ["LICENSE", "LICENSING.md"]
 authors = [{ name = "Fulong Li" }, { name = "AIPE Magnetics contributors" }]
 keywords = ["magnetics", "power-electronics", "core-loss", "magnetic-materials", "ferrite", "dataset", "mcp"]
 classifiers = [
@@ -34,7 +36,7 @@ dependencies = [
 hdf5 = ["h5py>=3.8"]
 mcp = ["mcp>=2.0,<3"]
 # publishing to the Hugging Face dataset (reading a published release needs no extra dependency)
-hub = ["huggingface_hub>=2.4,<3"]
+hub = ["huggingface_hub>=2.4,<3", "pyarrow>=14"]
 # readers for heterogeneous original files used by the importers (never needed to query the data)
 importers = ["h5py>=3.8", "openpyxl>=3.1", "xlrd>=2.0", "scipy>=1.10", "pyarrow>=14"]
 dev = [
