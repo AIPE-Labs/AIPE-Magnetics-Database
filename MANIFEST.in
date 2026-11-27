@@ -1,3 +1,4 @@
+include LICENSE LICENSING.md
 graft data/normalized
 graft data/canonical
 graft data/reports

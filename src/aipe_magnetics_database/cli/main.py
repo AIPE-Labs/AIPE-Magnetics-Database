@@ -91,6 +91,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--allow-download", action="store_true", help="download pinned raw inputs that are not committed (SHA-256 verified)")
     p.add_argument("--cache", help="cache directory"); p.add_argument("--allow-missing-local-tables", action="store_true",
                                                                        help="stage even when regenerated tables-local/ sidecars are absent")
+    p.add_argument("--no-tabular", action="store_true", help="leave out the Parquet view tabular/v0.2/ (which needs pyarrow)")
     p = h.add_parser("verify-stage", help="re-hash a staged release against its checksums.json"); p.add_argument("stage", type=Path)
     p = h.add_parser("publish", help="upload a staged release (Hub pull request by default) and verify every file")
     p.add_argument("stage", type=Path); p.add_argument("--repo", default=None); p.add_argument("--mode", choices=["pr", "main", "branch"], default="pr")
@@ -271,7 +272,7 @@ def _hub(args: argparse.Namespace, root: str | None) -> int:
     if args.action == "stage":
         from aipe_magnetics_database.hub.stage import build_stage
         index = build_stage(args.out, sources=args.source, allow_download=args.allow_download, cache_dir=args.cache,
-                            require_local_tables=not args.allow_missing_local_tables)
+                            require_local_tables=not args.allow_missing_local_tables, tabular=not args.no_tabular)
         print(json.dumps({"stage": str(args.out), "totals": index["totals"], "quality": index["quality_summary"]}, indent=2))
         return 0
     if args.action == "verify-stage":

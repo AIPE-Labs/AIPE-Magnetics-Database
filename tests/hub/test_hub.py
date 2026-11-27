@@ -404,3 +404,95 @@ def test_publish_to_separate_branch_leaves_main_untouched(stage_dir: Path, hub: 
     receipt = publish(stage_dir, mode="branch", branch="ci-test", log=lambda _m: None)
     assert receipt["verified"] and receipt["revision"] == "ci-test" and hub.refs["main"] == before
     assert publish(stage_dir, mode="branch", branch="ci-test", log=lambda _m: None)["plan"]["upload"] == 0
+
+
+# -- tabular (Parquet) view ----------------------------------------------------------------------------
+def test_stage_tabular_view_holds_the_normalised_values(stage_dir: Path):
+    pq = pytest.importorskip("pyarrow.parquet")
+    from aipe_magnetics_database.hub.tabular import ROW_KEYS, TABULAR_LAYOUT, tabular_path
+
+    index = json.loads((stage_dir / "manifests/dataset-index.json").read_text(encoding="utf-8"))
+    tabular = index["tabular"]
+    assert tabular["layout"] == TABULAR_LAYOUT and "files" not in tabular
+    assert list(tabular["configs"])[:3] == ["materials", "material_properties", "measurements"]
+    checksums = load_checksums(stage_dir)
+    for name, config in tabular["configs"].items():
+        assert config["rows"] == sum(config["files"].values()) > 0
+        schemas = set()
+        for rel, rows in config["files"].items():
+            assert rel in checksums and rel == tabular_path(name, Path(rel).stem)
+            table = pq.read_table(stage_dir / rel)
+            assert table.num_rows == rows
+            assert table.schema.metadata[b"source_id"].decode() == Path(rel).stem
+            schemas.add(tuple((f.name, str(f.type)) for f in table.schema))
+        assert len(schemas) == 1, f"{name}: every file of a config must share one schema"
+    assert index["totals"]["table_rows_published"] == sum(index["totals"]["table_rows"].values())
+    assert index["totals"]["tables_not_published"] == 0
+
+    # one record, value for value, against the normalised rows
+    source = registry.by_id("zenodo_8292861_hefmag")
+    base = ROOT / "data/normalized" / source["directory"]
+    record = next(json.loads(line) for line in (base / json.loads((base / "index.json").read_text())["shards"]["measurements"][0]).read_text(
+        encoding="utf-8").splitlines())
+    spec = record["extensions"]["aipe.table"]
+    expected = spec["rows"] if spec.get("rows") is not None else [json.loads(x) for x in (base / spec["rows_file"]).read_text().splitlines()]
+    table = pq.read_table(stage_dir / tabular_path(spec["quantity"], source["id"])).to_pylist()
+    mine = [row for row in table if row["measurement_id"] == record["id"]]
+    assert len(mine) == spec["row_count"] == len(expected)
+    names = [c["name"] for c in spec["columns"]]
+    assert [[row[n] for n in names] for row in mine] == expected
+    assert all(row["license"] == "CC-BY-4.0" and row["source_id"] == source["id"] and row["data_class"] for row in mine)
+    assert set(mine[0]) >= {k for k, _ in ROW_KEYS}
+    measurements = pq.read_table(stage_dir / tabular_path("measurements", source["id"])).to_pylist()
+    entry = next(m for m in measurements if m["measurement_id"] == record["id"])
+    assert entry["rows_published"] is True and entry["row_count"] == spec["row_count"] and entry["columns"] == names
+    assert entry["quantity"] == spec["quantity"] and entry["frequency_min"] <= entry["frequency_max"]
+
+    card = (stage_dir / "README.md").read_text(encoding="utf-8")
+    front = card.split("---")[1]
+    assert "viewer: false" not in front and "configs:" in front
+    for name in tabular["configs"]:
+        assert f"- config_name: {name}\n  data_files:\n  - split: train\n    path: tabular/v0.2/{name}/*.parquet" in front
+    assert "load_dataset(" in card and "pip install aipe-magnetics-database\n" not in card
+    assert "tabular/v0.2/<config>/<source-id>.parquet" in (stage_dir / "LICENSE.md").read_text(encoding="utf-8")
+
+
+def test_tabular_view_marks_tables_whose_rows_are_not_available(tmp_path: Path):
+    pq = pytest.importorskip("pyarrow.parquet")
+    import shutil
+
+    from aipe_magnetics_database.hub.tabular import build_tabular, quantity_schemas, tabular_path
+
+    source = registry.by_id("paderborn_lea_materialdatabase")
+    base = tmp_path / "root/data/normalized" / source["directory"]
+    shutil.copytree(ROOT / "data/normalized" / source["directory"], base)
+    index = json.loads((base / "index.json").read_text(encoding="utf-8"))
+    removed = index["tables"][0]
+    dropped = sum(1 for line in (base / removed).read_text(encoding="utf-8").splitlines() if line.strip())
+    (base / removed).unlink()
+    result = build_tabular(tmp_path / "root", [source], tmp_path / "out", log=lambda _m: None)
+    stats = result["sources"][source["id"]]
+    assert stats["tables_missing"] == 1 and stats["rows_missing"] == dropped
+    assert stats["rows_published"] == sum(index["table_rows"].values()) - dropped
+    listed = pq.read_table(tmp_path / "out" / tabular_path("measurements", source["id"])).to_pylist()
+    assert [m["rows_published"] for m in listed].count(False) == 1
+    assert sum(c["rows"] for name, c in result["configs"].items() if name in quantity_schemas(tmp_path / "root", [source])) == stats["rows_published"]
+
+
+def test_tabular_schema_is_the_union_over_every_publishable_source():
+    from aipe_magnetics_database.hub.tabular import quantity_schemas
+
+    publishable_sources = [s for s in registry.SOURCES if publishable(s)[0]]
+    full = quantity_schemas(ROOT, publishable_sources)
+    one = quantity_schemas(ROOT, [registry.by_id("nabih_magneto")])
+    assert set(c["name"] for c in one["core_loss"]) < set(c["name"] for c in full["core_loss"])
+    assert all(c["type"] == ("double" if c["unit"] else "string") for cols in full.values() for c in cols)
+    by_name = {c["name"]: c for c in full["core_loss"]}
+    assert by_name["loss_density"]["unit"] == "W/m^3" and by_name["waveform"]["type"] == "string"
+
+
+def test_stage_without_tabular_view_keeps_the_viewer_off(tmp_path: Path):
+    index = build_stage(tmp_path / "release", root=ROOT, sources=["zenodo_21626116_smc_ferrite_triangular"], tabular=False, log=lambda _m: None)
+    assert "tabular" not in index and not (tmp_path / "release/tabular").exists()
+    assert "viewer: false" in (tmp_path / "release/README.md").read_text(encoding="utf-8")
+    assert verify_stage(tmp_path / "release") == []
