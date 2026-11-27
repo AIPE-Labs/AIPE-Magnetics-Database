@@ -105,19 +105,22 @@ published file; it is bundled into the wheel. `aipe-magnetics-db quality` compar
 
 ## Reading published data
 
-Bundled data work offline as before. A table that is only on Hugging Face (for example the 81 MAS B-H cycles in
-`tables-local/`) is downloaded on request from `resolve/<exact commit>/<path>`, verified against the SHA-256 in
+Bundled data work offline as before. A table that is only on Hugging Face (the 29,741-row variable-temperature table
+of Zenodo 7368936) is downloaded on request from `resolve/<exact commit>/<path>`, verified against the SHA-256 in
 `data/huggingface.json` *and* the record's `rows_sha256`, and cached in `AIPE_MAGNETICS_CACHE` (default
 `~/.cache/aipe-magnetics`). No account or `huggingface_hub` is needed.
 
 ```sh
-AIPE_MAGNETICS_ALLOW_DOWNLOAD=1 aipe-magnetics-db measurements table measurement.mas-dmegc-dmr95-0400-bh-cycle --limit 5
-aipe-magnetics-db hub fetch measurement.mas-dmegc-dmr95-0400-bh-cycle    # download once, then offline
+AIPE_MAGNETICS_ALLOW_DOWNLOAD=1 aipe-magnetics-db measurements table measurement.zenodo-7368936-n87-variable-temperature-core-loss --limit 5
+aipe-magnetics-db hub fetch measurement.zenodo-7368936-n87-variable-temperature-core-loss    # download once, then offline
 ```
 
 ```python
-db.get_table("measurement.mas-dmegc-dmr95-0400-bh-cycle", allow_download=True)
+db.get_table("measurement.zenodo-7368936-n87-variable-temperature-core-loss", allow_download=True)
 ```
+
+The 81 MAS B-H cycle tables are in neither place: their upstream input is gone and no copy was archived
+([provenance-and-limitations.md](provenance-and-limitations.md)).
 
 ## Local commands
 

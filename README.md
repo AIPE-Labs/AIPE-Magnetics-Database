@@ -5,14 +5,14 @@ core geometries, and measured core loss, complex permeability, permittivity and 
 open sources (Princeton MagNet, Paderborn LEA, OpenMagnetics MAS, HEFMAG, the Nabih MHz core-loss database, Dartmouth
 N87 dielectric data, INRIM, Zenodo and a curated datasheet catalogue), converted to SI units, and deduplicated across
 sources. Every value keeps its source, version, licence and data class. The current release holds 1,164 materials,
-21,237 core shapes and parts, and 1,764 measurement tables with 2.35 million rows, of which 621,066 are independent
-experimental measurements.
+21,237 core shapes and parts, and 1,764 measurement tables: 867,331 retrievable rows, of which 621,066 are independent
+experimental measurements. The rows of 81 digitised MAS datasheet B-H loops are no longer retrievable upstream
+([limitations](docs/provenance-and-limitations.md)).
 
 Original files, the normalised records and large tables are published on Hugging Face as
 [**FulongLi/AIPE-Magnetics-Dataset**](https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset); this repository
 builds, validates and publishes that dataset and reads it back at a pinned commit ([docs/huggingface.md](docs/huggingface.md)).
-From the next release the dataset also carries a Parquet view, so `datasets.load_dataset("FulongLi/AIPE-Magnetics-Dataset",
-"core_loss")` works without this package.
+Its Parquet view loads without this package: `datasets.load_dataset("FulongLi/AIPE-Magnetics-Dataset", "core_loss")`.
 
 This repository serves data only. Loss models, fitting and component design live in
 [AIPE-Magnetics-Design](https://github.com/FulongLi/AIPE-Magnetics-Design).
