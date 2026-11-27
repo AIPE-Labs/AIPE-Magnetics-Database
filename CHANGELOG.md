@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+- **Hugging Face release `2cca63a2`** (2026-11-27, recorded in `data/huggingface.json`, 344 files verified): the first
+  release published from `AIPE-Labs/AIPE-Magnetics-Database` to `AIPE-Labs/AIPE-Magnetics-Dataset`. The data are those
+  of `485a5e9f`; the dataset card and the manifests carry the new repository and dataset addresses.
+
 ## 0.3.0
 
 Released 2026-11-27 (tag `v0.3.0`), the first tagged release.

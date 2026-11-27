@@ -1,16 +1,16 @@
 {
   "layout": "aipe.magnetics.hf-layout/1.1",
-  "repo_id": "FulongLi/AIPE-Magnetics-Dataset",
+  "repo_id": "AIPE-Labs/AIPE-Magnetics-Dataset",
   "repo_type": "dataset",
   "revision": "main",
-  "commit": "485a5e9f58c3d9eea3c84d8b68f7d5af95d2859e",
-  "published_at": "2026-11-27T16:52:27.000Z",
-  "url": "https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset/tree/485a5e9f58c3d9eea3c84d8b68f7d5af95d2859e",
+  "commit": "2cca63a2cea8a4f6eecb44a09b079a24a38db85b",
+  "published_at": "2026-11-27T17:44:37.000Z",
+  "url": "https://huggingface.co/datasets/AIPE-Labs/AIPE-Magnetics-Dataset/tree/2cca63a2cea8a4f6eecb44a09b079a24a38db85b",
   "builder": {
     "package": "aipe-magnetics-database",
     "version": "0.3.0",
-    "commit": "0bd1e11aede2569980c36f46fbd8ca0d31a28ab0",
-    "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database"
+    "commit": "ea0e6a24838df71be045d2d85dfea22b506ea29a",
+    "repository": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"
   },
   "sources": {
     "openmagnetics_mas": {
@@ -141,24 +141,24 @@
       "size": 1660
     },
     "README.md": {
-      "sha256": "722b349d8361debe653ea3185dd1f36ac39d0ca3c0641b00c4c26493710623e2",
-      "size": 15662
+      "sha256": "56aa71ebbeeb15cdd355565dac40ee3276e2e357209a19fdc92e5166e93f9ef0",
+      "size": 15652
     },
     "manifests/checksums.json": {
-      "sha256": "993005adb03b6cb659dbb40715e48ac675fc97dc9914c63c4381f0cca34b701e",
+      "sha256": "dae19b8c4cf46f3e8726be903c710168075dcc42b31ba1b67522d8781c9e58c3",
       "size": 66874
     },
     "manifests/dataset-index.json": {
-      "sha256": "94c1aad2dfbe930238243799d0a27c3297fe2f9d6458bac5cbfe6b6327c5320a",
-      "size": 67737
+      "sha256": "171df3dcce29afe9c32f4918da6fecda38e93e59400510ea24181893a2d0b625",
+      "size": 67714
     },
     "manifests/quality-report.json": {
-      "sha256": "b63b7224ddbe69463a51ded8c66cc5c27618e548b408adb47ae97b25f4a295b9",
-      "size": 21387
+      "sha256": "d17d46829c3ce14398f758dee3d0944529ecaeef46ab3c5f1cd9bc52f0965165",
+      "size": 20338
     },
     "manifests/sources.json": {
-      "sha256": "5ea30f5c1c92cf68c316bfd6307aa7201714eed502e05d653d76e11ba5b0bdec",
-      "size": 104842
+      "sha256": "4ac185a4d50cff59d74f5efd831d3ac645b5594060969375ad4b59e2dfb263a1",
+      "size": 104843
     },
     "normalized/v0.2/guillod_n87_dielectric/datasets/guillod-n87-dielectric.json": {
       "sha256": "c7bba360caa55e873c72b6af468e34cd9da019a1736515c3e6ed1cb8cc99495e",
