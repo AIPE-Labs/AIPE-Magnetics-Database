@@ -2,7 +2,7 @@
 
 Authentication is whatever ``huggingface_hub`` resolves. In the GitHub Actions workflow
 (``.github/workflows/publish-huggingface.yml``) that is a Trusted Publisher exchange: the job has
-``permissions: id-token: write`` and ``HF_OIDC_RESOURCE=datasets/FulongLi/AIPE-Magnetics-Dataset``; no token is
+``permissions: id-token: write`` and ``HF_OIDC_RESOURCE=datasets/AIPE-Labs/AIPE-Magnetics-Dataset``; no token is
 stored and none is ever printed.
 
 Rules enforced before anything is sent:

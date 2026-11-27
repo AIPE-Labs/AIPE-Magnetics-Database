@@ -120,7 +120,7 @@ def hub_release(*, root: str | Path | None = None) -> dict[str, Any]:
     """The published Hugging Face release this data store points to (repository, exact commit, file count, URL)."""
     hub = _db(root).hub
     if hub is None:
-        return {"published": False, "repo_id": "FulongLi/AIPE-Magnetics-Dataset",
+        return {"published": False, "repo_id": "AIPE-Labs/AIPE-Magnetics-Dataset",
                 "note": "no release recorded in data/huggingface.json yet; all bundled data are available offline"}
     return {"published": True} | hub.status()
 

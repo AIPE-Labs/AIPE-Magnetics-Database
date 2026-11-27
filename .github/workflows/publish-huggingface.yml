@@ -1,6 +1,6 @@
 name: Publish to Hugging Face
 # Publishes the verified, redistributable release (raw/, normalized/v0.2/, manifests/, README.md) to
-# https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset through a Hugging Face Trusted Publisher:
+# https://huggingface.co/datasets/AIPE-Labs/AIPE-Magnetics-Dataset through a Hugging Face Trusted Publisher:
 # the publish job exchanges a GitHub OIDC id token for a one-hour, repo-scoped HF token. No HF token is stored in
 # GitHub secrets and none is printed. Manual dispatch only - nothing is published on ordinary pushes.
 #
@@ -51,7 +51,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  HF_REPO: FulongLi/AIPE-Magnetics-Dataset
+  HF_REPO: AIPE-Labs/AIPE-Magnetics-Dataset
   # push to hf-publish/test: fixed small test publication; workflow_dispatch: the inputs
   MODE: ${{ github.event_name == 'push' && 'branch' || inputs.mode }}
   MERGE: ${{ github.event_name == 'push' && 'false' || inputs.merge }}
@@ -138,7 +138,7 @@ jobs:
       contents: read
       id-token: write   # required to mint the GitHub OIDC id token exchanged for a short-lived HF token
     env:
-      HF_OIDC_RESOURCE: datasets/FulongLi/AIPE-Magnetics-Dataset
+      HF_OIDC_RESOURCE: datasets/AIPE-Labs/AIPE-Magnetics-Dataset
       HF_HUB_DISABLE_TELEMETRY: '1'
     steps:
       - uses: actions/checkout@v4

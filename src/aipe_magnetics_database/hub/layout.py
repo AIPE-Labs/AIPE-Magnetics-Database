@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import posixpath
 
-DEFAULT_REPO_ID = "FulongLi/AIPE-Magnetics-Dataset"
+DEFAULT_REPO_ID = "AIPE-Labs/AIPE-Magnetics-Dataset"
 REPO_TYPE = "dataset"
 OIDC_RESOURCE = f"datasets/{DEFAULT_REPO_ID}"
 ENDPOINT = "https://huggingface.co"

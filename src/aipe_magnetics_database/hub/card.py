@@ -82,7 +82,7 @@ def dataset_card(index: dict[str, Any], sources: list[dict[str, Any]]) -> str:
     if sequences and not totals.get("waveform_files_not_published"):
         rows_text += f", {sequences:,} sampled waveform sequences ({totals['table_rows'].get('waveform_samples', 0):,} samples, HDF5)"
     tabular = index.get("tabular")
-    repo_id = index.get("repo_id", "FulongLi/AIPE-Magnetics-Dataset")
+    repo_id = index.get("repo_id", "AIPE-Labs/AIPE-Magnetics-Dataset")
     q = index["quality_summary"]
     lines = [
         "---",

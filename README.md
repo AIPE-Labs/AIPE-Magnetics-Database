@@ -10,9 +10,9 @@ experimental measurements. The rows of 81 digitised MAS datasheet B-H loops are 
 ([limitations](docs/provenance-and-limitations.md)).
 
 Original files, the normalised records and large tables are published on Hugging Face as
-[**FulongLi/AIPE-Magnetics-Dataset**](https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset); this repository
+[**AIPE-Labs/AIPE-Magnetics-Dataset**](https://huggingface.co/datasets/AIPE-Labs/AIPE-Magnetics-Dataset); this repository
 builds, validates and publishes that dataset and reads it back at a pinned commit ([docs/huggingface.md](docs/huggingface.md)).
-Its Parquet view loads without this package: `datasets.load_dataset("FulongLi/AIPE-Magnetics-Dataset", "core_loss")`.
+Its Parquet view loads without this package: `datasets.load_dataset("AIPE-Labs/AIPE-Magnetics-Dataset", "core_loss")`.
 
 This repository serves data only. Loss models, fitting and component design live in
 [AIPE-Magnetics-Design](https://github.com/FulongLi/AIPE-Magnetics-Design).
