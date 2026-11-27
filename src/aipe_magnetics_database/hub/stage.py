@@ -176,9 +176,9 @@ def _normalized(root: Path, source: dict[str, Any], stage: Stage, *, require_loc
                                 f"'aipe-magnetics-db refresh --source {sid} --allow-download' first")
     for rel in rels:
         stage.add(normalized_path(sid, rel), base / rel, sha256=expected.get(rel))
-    table_rows = _table_rows(base, index)
-    return {"index": index, "files": len(rels), "missing_local_tables": missing_local,
-            "rows_missing": sum(table_rows.get(rel, 0) for rel in missing_local)}
+    rows_total, rows_by_file = _measurement_rows(base, index)
+    return {"index": index, "files": len(rels), "missing_local_tables": missing_local, "rows_described": rows_total,
+            "rows_missing": sum(rows_by_file.get(rel, 0) for rel in missing_local)}
 
 
 def _dataset_citation(root: Path, source: dict[str, Any], index: dict[str, Any]) -> str | None:
@@ -200,15 +200,19 @@ def _waveform_checksums(base: Path, index: dict[str, Any]) -> dict[str, str]:
     return out
 
 
-def _table_rows(base: Path, index: dict[str, Any]) -> dict[str, int]:
-    """``{rows_file: row_count}`` of the measurement records whose rows live in a sidecar."""
-    out: dict[str, int] = {}
+def _measurement_rows(base: Path, index: dict[str, Any]) -> tuple[int, dict[str, int]]:
+    """``(rows of every measurement table, {rows_file: row_count} of the tables whose rows live in a sidecar)``.
+
+    Counted from the records, not from ``index["table_rows"]``, which also counts waveform samples and sequences.
+    """
+    total, by_file = 0, {}
     for rel in index["shards"].get("measurements", []):
         for line in (base / rel).read_text(encoding="utf-8").splitlines():
             table = json.loads(line).get("extensions", {}).get("aipe.table") or {}
+            total += table.get("row_count", 0)
             if table.get("rows_file"):
-                out[table["rows_file"]] = table["row_count"]
-    return out
+                by_file[table["rows_file"]] = table["row_count"]
+    return total, by_file
 
 
 def _table_checksums(base: Path, index: dict[str, Any]) -> dict[str, str]:
@@ -260,7 +264,7 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         norm = _normalized(root, source, stage, require_local_tables=require_local_tables)
         index = norm["index"]
         staged_sources.append(source)
-        rows_described = sum(index["table_rows"].values())
+        rows_described = norm["rows_described"]
         archived = [f for f in raw if f.get("available", True)]
         raw_bytes = sum(f["size"] for f in archived)
         citation = source.get("citation") or _dataset_citation(root, source, index)
@@ -272,8 +276,10 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         per_source.append({"id": source["id"], "title": source["title"], "license": source["license"], "version": source.get("version"),
                            "url": source["url"], "citation": citation, "redistribution": source.get("redistribution"),
                            "record_counts": index["record_counts"],
-                           "table_rows": index["table_rows"], "table_rows_published": rows_described - norm["rows_missing"],
+                           "table_rows": index["table_rows"], "table_rows_described": rows_described,
+                           "table_rows_published": rows_described - norm["rows_missing"],
                            "tables_not_published": len([r for r in norm["missing_local_tables"] if r.startswith("tables")]),
+                           "waveform_files_not_published": len([r for r in norm["missing_local_tables"] if r.startswith("waveforms")]),
                            "raw_files": len(archived), "raw_bytes": raw_bytes,
                            "raw_unavailable": [f["upstream_path"] for f in raw if not f.get("available", True)],
                            "retrieved_at": source.get("retrieved_at"),
@@ -306,7 +312,9 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
         "builder": {"package": "aipe-magnetics-database", "version": __version__, "commit": _git_commit(root),
                     "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database"},
         "sources": per_source, "totals": {"record_counts": dict(sorted(totals.items())), "table_rows": dict(sorted(rows.items())),
+                                          "table_rows_described": sum(s["table_rows_described"] for s in per_source),
                                           "table_rows_published": sum(s["table_rows_published"] for s in per_source),
+                                          "waveform_files_not_published": sum(s["waveform_files_not_published"] for s in per_source),
                                           "tables_not_published": sum(s["tables_not_published"] for s in per_source),
                                           "raw_bytes": sum(s["raw_bytes"] for s in per_source),
                                           "normalized_bytes": sum(s["normalized_bytes"] for s in per_source)},
