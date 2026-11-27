@@ -3,6 +3,10 @@
 
 ## Unreleased
 
+- The repository moved to the AIPE-Labs organisation: <https://github.com/AIPE-Labs/AIPE-Magnetics-Database>, Data
+  Explorer at <https://aipe-labs.github.io/AIPE-Magnetics-Database/>. Links, install commands and plugin marketplace
+  metadata use the new owner. Schema `$id` values and the Hugging Face dataset `FulongLi/AIPE-Magnetics-Dataset` are
+  unchanged.
 - **Hugging Face release `485a5e9f`** (2026-11-27, recorded in `data/huggingface.json`, 344 files verified): the first
   release with the tabular view and all 10 publishable sources, the MagNet oscilloscope waveforms included. It holds
   867,331 table rows in 15 configs; `datasets.load_dataset` and pinned reads from this package were checked against it.

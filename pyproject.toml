@@ -60,9 +60,9 @@ aipe-magnetics-db = "aipe_magnetics_database.cli.main:main"
 aipe-magnetics-db-mcp = "aipe_magnetics_database.mcp.server:main"
 
 [project.urls]
-Homepage = "https://github.com/FulongLi/AIPE-Magnetics-Database"
-Repository = "https://github.com/FulongLi/AIPE-Magnetics-Database"
-Changelog = "https://github.com/FulongLi/AIPE-Magnetics-Database/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"
+Repository = "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"
+Changelog = "https://github.com/AIPE-Labs/AIPE-Magnetics-Database/blob/main/CHANGELOG.md"
 Design = "https://github.com/FulongLi/AIPE-Magnetics-Design"
 
 [tool.setuptools]

@@ -17,7 +17,7 @@ Dependency direction: **Design -> Database**. The Database never imports Design.
 ## Install order
 
 ```sh
-pip install "aipe-magnetics-database @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"
+pip install "aipe-magnetics-database @ git+https://github.com/AIPE-Labs/AIPE-Magnetics-Database.git"
 pip install "aipe-magnetics-design @ git+https://github.com/FulongLi/AIPE-Magnetics-Design.git"
 ```
 

@@ -9,7 +9,7 @@ name: Publish to Hugging Face
 # exchange, write access and verification before a full release. No other branch or event publishes.
 #
 # Trusted Publisher claims this workflow presents (configure the same on the dataset's Settings -> Trusted Publishers):
-#   repository = FulongLi/AIPE-Magnetics-Database
+#   repository = AIPE-Labs/AIPE-Magnetics-Database
 #   workflow   = publish-huggingface.yml
 #   branch     = the branch it is dispatched on (main for releases)
 on:

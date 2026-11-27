@@ -44,7 +44,7 @@ DEFAULT_CACHE_DIRNAME = ".aipe-cache"
 CACHE_ENV_VAR = "AIPE_MAGNETICS_CACHE"
 MANIFEST_VERSION = "aipe.magnetics.cache/0.2"
 MANIFEST_NAME = "manifest.json"
-USER_AGENT = f"aipe-magnetics/{__version__} (+https://github.com/FulongLi/AIPE-Magnetics-Database)"
+USER_AGENT = f"aipe-magnetics/{__version__} (+https://github.com/AIPE-Labs/AIPE-Magnetics-Database)"
 _SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 _COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 #: device names that Windows refuses as file stems (with or without an extension), case-insensitively

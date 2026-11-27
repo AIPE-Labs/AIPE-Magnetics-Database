@@ -310,7 +310,7 @@ def build_stage(out: str | Path, *, root: Path | None = None, sources: list[str]
     dataset_index = {
         "layout": LAYOUT_VERSION, "schema_version": "0.2.0", "schema_dir": SCHEMA_DIR, "repo_id": repo_id, "generated_at": now,
         "builder": {"package": "aipe-magnetics-database", "version": __version__, "commit": _git_commit(root),
-                    "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database"},
+                    "repository": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"},
         "sources": per_source, "totals": {"record_counts": dict(sorted(totals.items())), "table_rows": dict(sorted(rows.items())),
                                           "table_rows_described": sum(s["table_rows_described"] for s in per_source),
                                           "table_rows_published": sum(s["table_rows_published"] for s in per_source),

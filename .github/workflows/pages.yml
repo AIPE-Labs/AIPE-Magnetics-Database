@@ -1,6 +1,6 @@
 name: Data Explorer (GitHub Pages)
 # Builds the read-only explorer from the committed data store and deploys it to
-# https://fulongli.github.io/AIPE-Magnetics-Database/. No importer runs and nothing is downloaded:
+# https://aipe-labs.github.io/AIPE-Magnetics-Database/. No importer runs and nothing is downloaded:
 # tools/build_site.py only reads data/ through the package's MagneticDatabase and writes _site/.
 on:
   push:

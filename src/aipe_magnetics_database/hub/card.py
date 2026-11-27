@@ -16,7 +16,7 @@ def _fmt_bytes(n: int) -> str:
     return str(n)
 
 
-INSTALL = 'pip install "aipe-magnetics-database @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"'
+INSTALL = 'pip install "aipe-magnetics-database @ git+https://github.com/AIPE-Labs/AIPE-Magnetics-Database.git"'
 
 
 def _table_rows(counts: dict[str, int]) -> int:
@@ -104,8 +104,8 @@ def dataset_card(index: dict[str, Any], sources: list[dict[str, Any]]) -> str:
         "Original files and standardised records of open soft-magnetic material and core data for power electronics: material",
         "properties, core shapes and parts, and measured core loss, complex permeability, permittivity and B-H tables. This",
         "repository is the storage layer; it is built, validated and published by the",
-        "[AIPE Magnetics Database](https://github.com/FulongLi/AIPE-Magnetics-Database) (Python API, CLI, MCP tools,",
-        "[Data Explorer](https://fulongli.github.io/AIPE-Magnetics-Database/)).",
+        "[AIPE Magnetics Database](https://github.com/AIPE-Labs/AIPE-Magnetics-Database) (Python API, CLI, MCP tools,",
+        "[Data Explorer](https://aipe-labs.github.io/AIPE-Magnetics-Database/)).",
         "",
         f"This release: {len(published)} sources, " + ", ".join(f"{v:,} {k.replace('_', ' ')}" for k, v in totals["record_counts"].items())
         + f" records, {rows_text}; raw {_fmt_bytes(totals['raw_bytes'])}, normalised {_fmt_bytes(totals['normalized_bytes'])}.",
@@ -132,7 +132,7 @@ def dataset_card(index: dict[str, Any], sources: list[dict[str, Any]]) -> str:
         "zero. `extensions[\"aipe.data\"][\"data_class\"]` keeps experimental measurements, manufacturer datasheet curves,",
         "manufacturer-tool exports, derived views and fitted parameters apart. Tables (`extensions[\"aipe.table\"]`) list",
         "their columns (SI unit, original unit, definition); rows are JSON arrays in a sidecar named by `rows_file` and",
-        "verified by `rows_sha256`. Schema: [docs/data-standard-v0.2.md](https://github.com/FulongLi/AIPE-Magnetics-Database/blob/main/docs/data-standard-v0.2.md).",
+        "verified by `rows_sha256`. Schema: [docs/data-standard-v0.2.md](https://github.com/AIPE-Labs/AIPE-Magnetics-Database/blob/main/docs/data-standard-v0.2.md).",
         "",
         "The Python package adds unit-checked queries, provenance lookups, a CLI and MCP tools for AI agents (not on PyPI yet):",
         "",

@@ -19,7 +19,7 @@ This repository serves data only. Loss models, fitting and component design live
 
 ## Explore Online
 
-**[fulongli.github.io/AIPE-Magnetics-Database](https://fulongli.github.io/AIPE-Magnetics-Database/)**
+**[aipe-labs.github.io/AIPE-Magnetics-Database](https://aipe-labs.github.io/AIPE-Magnetics-Database/)**
 
 The AIPE Magnetics Data Explorer is a read-only website for people. Search materials by name, grade, manufacturer or
 class; inspect their properties with conditions and evidence; plot core-loss, permeability and B-H tables; browse core
@@ -32,20 +32,20 @@ Claude Code and Codex use the same local, read-only MCP server. Install the pack
 `python` runs:
 
 ```sh
-pip install "aipe-magnetics-database[mcp] @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"
+pip install "aipe-magnetics-database[mcp] @ git+https://github.com/AIPE-Labs/AIPE-Magnetics-Database.git"
 ```
 
 Claude Code:
 
 ```sh
-claude plugin marketplace add FulongLi/AIPE-Magnetics-Database
+claude plugin marketplace add AIPE-Labs/AIPE-Magnetics-Database
 claude plugin install aipe-magnetics-database@aipe-magnetics-database
 ```
 
 Codex:
 
 ```sh
-codex plugin marketplace add FulongLi/AIPE-Magnetics-Database
+codex plugin marketplace add AIPE-Labs/AIPE-Magnetics-Database
 codex plugin add aipe-magnetics-database@aipe-magnetics-database
 ```
 

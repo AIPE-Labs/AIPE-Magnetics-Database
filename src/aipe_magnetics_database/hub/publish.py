@@ -189,7 +189,7 @@ def publish(stage_dir: str | Path, *, repo_id: str = DEFAULT_REPO_ID, mode: str 
     commit = index["builder"].get("commit") or "unknown"
     title = f"{RELEASE_TITLE} {release}"
     description = (f"Release {release} built by aipe-magnetics-database {index['builder']['version']} from "
-                   f"https://github.com/FulongLi/AIPE-Magnetics-Database/commit/{commit}.\n\n"
+                   f"https://github.com/AIPE-Labs/AIPE-Magnetics-Database/commit/{commit}.\n\n"
                    f"Upload {len(plan.upload)} file(s), {plan.upload_bytes:,} bytes; {len(plan.unchanged)} unchanged; nothing deleted.\n"
                    f"Replaced (new version of a non-raw file): {', '.join(plan.replace) or 'none'}.\n"
                    f"Every file is listed with SHA-256 in manifests/checksums.json.")

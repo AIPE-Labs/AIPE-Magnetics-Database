@@ -248,7 +248,7 @@
           '/blob/main/docs/provenance-and-limitations.md">provenance and limitations</a>.</p>' +
           '<h2>Programmatic access</h2><div class="card"><p>The same records are served to software and engineering agents by the Python API, ' +
           'the <code>aipe-magnetics-db</code> CLI and a read-only MCP server for Claude Code and Codex.</p>' +
-          '<pre class="json">pip install "aipe-magnetics-database[mcp] @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"\naipe-magnetics-db materials get "TDK N87"</pre>' +
+          '<pre class="json">pip install "aipe-magnetics-database[mcp] @ git+https://github.com/AIPE-Labs/AIPE-Magnetics-Database.git"\naipe-magnetics-db materials get "TDK N87"</pre>' +
           '<p class="small"><a href="' + esc(s.repository) + '#readme">README</a> · <a href="' + esc(s.repository) + '/blob/main/docs/api.md">API, CLI and MCP reference</a> · ' +
           '<a href="' + esc(s.repository) + '/blob/main/docs/data-format.md">data format</a></p></div>';
         var mapHost = document.getElementById("ov-map");

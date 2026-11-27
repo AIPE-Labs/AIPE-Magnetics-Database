@@ -88,7 +88,7 @@ Inputs: `mode` (`branch`, `main` or `pr`), `branch` (default `staging`), `merge`
 `ci-test` - the test publication; the first one succeeded at commit `3c9057f6` (20 files verified).
 
 The Trusted Publisher on the dataset (Settings -> Trusted Publishers -> GitHub Actions) must match
-`repository = FulongLi/AIPE-Magnetics-Database`, `workflow = publish-huggingface.yml` and, if a branch is set, the
+`repository = AIPE-Labs/AIPE-Magnetics-Database`, `workflow = publish-huggingface.yml` and, if a branch is set, the
 branch the workflow is dispatched on (`main`). It must not be read-only. On a mismatch the token exchange fails with
 `invalid_grant`; the job summary then lists the claims the run presented.
 
