@@ -19,6 +19,11 @@ def _fmt_bytes(n: int) -> str:
 INSTALL = 'pip install "aipe-magnetics-database @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"'
 
 
+def _table_rows(counts: dict[str, int]) -> int:
+    """Rows of measurement tables in an index ``table_rows`` mapping (waveform samples and sequences are not table rows)."""
+    return sum(v for k, v in counts.items() if not k.startswith("waveform_"))
+
+
 def _size_category(rows: int) -> str:
     for limit, label in ((1_000, "n<1K"), (10_000, "1K<n<10K"), (100_000, "10K<n<100K"), (1_000_000, "100K<n<1M"), (10_000_000, "1M<n<10M")):
         if rows < limit:
@@ -66,13 +71,16 @@ def dataset_card(index: dict[str, Any], sources: list[dict[str, Any]]) -> str:
     published = index["sources"]
     licences = sorted({s["license"] for s in published})
     totals = index["totals"]
-    described = sum(totals["table_rows"].values())
+    described = totals.get("table_rows_described", _table_rows(totals["table_rows"]))
     rows = totals.get("table_rows_published", described)
     withheld = totals.get("tables_not_published", 0)
     rows_text = f"{rows:,} table rows"
     if rows != described:
         rows_text += (f" ({described:,} are described by the records; the rows of {withheld:,} large regenerated tables are not in this release"
                       " and are marked `rows_published = false`)")
+    sequences = totals["table_rows"].get("waveform_sequences")
+    if sequences and not totals.get("waveform_files_not_published"):
+        rows_text += f", {sequences:,} sampled waveform sequences ({totals['table_rows'].get('waveform_samples', 0):,} samples, HDF5)"
     tabular = index.get("tabular")
     repo_id = index.get("repo_id", "FulongLi/AIPE-Magnetics-Dataset")
     q = index["quality_summary"]
@@ -147,10 +155,12 @@ def dataset_card(index: dict[str, Any], sources: list[dict[str, Any]]) -> str:
         version = str(s.get("version") or "-")
         version = version[:12] if len(version) == 40 else version
         rec = ", ".join(f"{k} {v:,}" for k, v in s["record_counts"].items())
-        total = sum(s["table_rows"].values())
+        total = s.get("table_rows_described", _table_rows(s["table_rows"]))
         shown = s.get("table_rows_published", total)
-        lines.append(f"| [{s['title']}]({s['url']}) (`{s['id']}`) | {s['license']} | {version} | {rec} | "
-                     + (f"{shown:,}" if shown == total else f"{shown:,} of {total:,}") + " | "
+        cell = f"{shown:,}" if shown == total else f"{shown:,} of {total:,}"
+        if s["table_rows"].get("waveform_sequences"):
+            cell = (f"{cell}; " if total else "") + f"{s['table_rows']['waveform_sequences']:,} waveform sequences"
+        lines.append(f"| [{s['title']}]({s['url']}) (`{s['id']}`) | {s['license']} | {version} | {rec} | {cell} | "
                      f"{s['raw_files']} files, {_fmt_bytes(s['raw_bytes'])} | {(s.get('citation') or '-').replace('|', '/')} |")
     excluded = [s for s in sources if not s.get("huggingface", {}).get("published")]
     lines += ["", f"{len(excluded)} further investigated sources are listed in `manifests/sources.json` as metadata only (licence does not",

@@ -496,3 +496,33 @@ def test_stage_without_tabular_view_keeps_the_viewer_off(tmp_path: Path):
     assert "tabular" not in index and not (tmp_path / "release/tabular").exists()
     assert "viewer: false" in (tmp_path / "release/README.md").read_text(encoding="utf-8")
     assert verify_stage(tmp_path / "release") == []
+
+
+def test_waveform_samples_are_not_counted_as_table_rows():
+    """A waveform source has no measurement tables: its samples and sequences must not be compared with the tabular rows."""
+    from aipe_magnetics_database.hub.card import _table_rows, dataset_card
+    from aipe_magnetics_database.hub.stage import _measurement_rows
+
+    scope = registry.by_id("princeton_magnet_scope")
+    base = ROOT / "data/normalized" / scope["directory"]
+    index = json.loads((base / "index.json").read_text(encoding="utf-8"))
+    assert index["table_rows"]["waveform_samples"] > 0
+    assert _measurement_rows(base, index) == (0, {})
+    assert _table_rows(index["table_rows"]) == 0
+
+    hefmag = registry.by_id("zenodo_8292861_hefmag")
+    base = ROOT / "data/normalized" / hefmag["directory"]
+    index = json.loads((base / "index.json").read_text(encoding="utf-8"))
+    assert _measurement_rows(base, index)[0] == sum(index["table_rows"].values())
+
+    source = {"id": "princeton_magnet_scope", "title": "scope", "url": "https://example.org", "license": "MIT", "version": "1",
+              "record_counts": {"waveform_dataset": 2}, "table_rows": {"waveform_samples": 2000000, "waveform_sequences": 200},
+              "table_rows_described": 0, "table_rows_published": 0, "raw_files": 1, "raw_bytes": 10, "citation": None}
+    card_index = {"sources": [source], "repo_id": "x/y", "builder": {"version": "0", "commit": None},
+                  "totals": {"record_counts": {"waveform_dataset": 2}, "table_rows": dict(source["table_rows"]), "table_rows_described": 0,
+                             "table_rows_published": 0, "tables_not_published": 0, "waveform_files_not_published": 0, "raw_bytes": 10,
+                             "normalized_bytes": 10},
+                  "quality_summary": {"records_checked": 1, "rows_checked": 0, "errors": 0, "warnings": 0, "checks_flagged": []}}
+    card = dataset_card(card_index, [])
+    assert "0 table rows, 200 sampled waveform sequences (2,000,000 samples, HDF5)" in card
+    assert "| 200 waveform sequences |" in card and "- n<1K" in card
