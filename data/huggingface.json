@@ -1,15 +1,15 @@
 {
-  "layout": "aipe.magnetics.hf-layout/1.0",
+  "layout": "aipe.magnetics.hf-layout/1.1",
   "repo_id": "FulongLi/AIPE-Magnetics-Dataset",
   "repo_type": "dataset",
   "revision": "main",
-  "commit": "d8c77ef67476eea39152f8dedfe28b566db617e9",
-  "published_at": "2026-11-07T23:32:11.000Z",
-  "url": "https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset/tree/d8c77ef67476eea39152f8dedfe28b566db617e9",
+  "commit": "485a5e9f58c3d9eea3c84d8b68f7d5af95d2859e",
+  "published_at": "2026-11-27T16:52:27.000Z",
+  "url": "https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset/tree/485a5e9f58c3d9eea3c84d8b68f7d5af95d2859e",
   "builder": {
     "package": "aipe-magnetics-database",
     "version": "0.3.0",
-    "commit": "34e3510d4c1f39d74265e8e0ee627d4675ce3abe",
+    "commit": "0bd1e11aede2569980c36f46fbd8ca0d31a28ab0",
     "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database"
   },
   "sources": {
@@ -93,15 +93,25 @@
       "raw_bytes": 16705,
       "normalized_files": 4,
       "normalized_bytes": 103270
+    },
+    "princeton_magnet_scope": {
+      "raw_prefix": "raw/princeton_magnet_scope/",
+      "normalized_prefix": "normalized/v0.2/princeton_magnet_scope/",
+      "license": "MIT",
+      "raw_files": 9,
+      "raw_bytes": 62713240,
+      "normalized_files": 6,
+      "normalized_bytes": 18631469
     }
   },
   "totals": {
     "record_counts": {
       "core_geometry": 21237,
-      "dataset": 12,
-      "magnetic_material": 1200,
+      "dataset": 13,
+      "magnetic_material": 1201,
       "measurement": 1764,
-      "model_metadata": 664
+      "model_metadata": 664,
+      "waveform_dataset": 2
     },
     "table_rows": {
       "amplitude_permeability": 4320,
@@ -114,35 +124,41 @@
       "energy_loss_and_permeability": 1087,
       "initial_permeability": 12543,
       "loss_factor": 18601,
-      "mass_core_loss": 1363
+      "mass_core_loss": 1363,
+      "waveform_samples": 2000000,
+      "waveform_sequences": 200
     },
-    "raw_bytes": 84367157,
-    "normalized_bytes": 113387115
+    "table_rows_described": 2348037,
+    "table_rows_published": 867331,
+    "waveform_files_not_published": 0,
+    "tables_not_published": 81,
+    "raw_bytes": 147080397,
+    "normalized_bytes": 132018584
   },
   "files": {
     "LICENSE.md": {
-      "sha256": "7394bb5650e8fa782c062562c3cfa68d95b7d10f74b7a516543eca3736c47876",
-      "size": 1297
+      "sha256": "1ec08ab651495ce5e226469b19a708529516b2433a0460428d284e6a6a008495",
+      "size": 1660
     },
     "README.md": {
-      "sha256": "8a5b228d462e6a314dca1daa819f41bd1432c5dd25d2b4a9d7b7429cc535fff8",
-      "size": 8010
+      "sha256": "722b349d8361debe653ea3185dd1f36ac39d0ca3c0641b00c4c26493710623e2",
+      "size": 15662
     },
     "manifests/checksums.json": {
-      "sha256": "f98da95c90dd459ce5e9f0466c22932f81f4b585e34efcc424cc90cbc2044e77",
-      "size": 54924
+      "sha256": "993005adb03b6cb659dbb40715e48ac675fc97dc9914c63c4381f0cca34b701e",
+      "size": 66874
     },
     "manifests/dataset-index.json": {
-      "sha256": "879e77c5ea3737e194572f9f023e14a76809a4adc75fc86d3635d10057df382f",
-      "size": 12407
+      "sha256": "94c1aad2dfbe930238243799d0a27c3297fe2f9d6458bac5cbfe6b6327c5320a",
+      "size": 67737
     },
     "manifests/quality-report.json": {
-      "sha256": "7bb29b32326a90897fe3a1d9d3d2d07a07bd8eb30751a29d505495a1d2cccb16",
-      "size": 20221
+      "sha256": "b63b7224ddbe69463a51ded8c66cc5c27618e548b408adb47ae97b25f4a295b9",
+      "size": 21387
     },
     "manifests/sources.json": {
-      "sha256": "01ae1b890b40134c65ce0980e2514e6dba49e117d12d866755221a3eab2a0fce",
-      "size": 97268
+      "sha256": "5ea30f5c1c92cf68c316bfd6307aa7201714eed502e05d653d76e11ba5b0bdec",
+      "size": 104842
     },
     "normalized/v0.2/guillod_n87_dielectric/datasets/guillod-n87-dielectric.json": {
       "sha256": "c7bba360caa55e873c72b6af468e34cd9da019a1736515c3e6ed1cb8cc99495e",
@@ -543,6 +559,30 @@
     "normalized/v0.2/princeton_magnet/tables/princeton-magnet-n87-core-loss.jsonl": {
       "sha256": "e8057e48f04cf6dfa3784609b29bdbf75a605d5960e6e62f85bb0000159d5753",
       "size": 8734452
+    },
+    "normalized/v0.2/princeton_magnet_scope/datasets/princeton-magnet-scope.json": {
+      "sha256": "ba6b468371ae82a1115916281503fc40655bc3119c1249e6bfea9e86ea0608be",
+      "size": 3774
+    },
+    "normalized/v0.2/princeton_magnet_scope/index.json": {
+      "sha256": "6c2ca12dd1f81fae6f916205c972c5ed32905fe7e911074ae098303d827e539d",
+      "size": 779
+    },
+    "normalized/v0.2/princeton_magnet_scope/materials/materials-001.jsonl": {
+      "sha256": "9797a5531bba3f32005079b328074e4511a4fbef933d23599660556e274d9c5f",
+      "size": 1784
+    },
+    "normalized/v0.2/princeton_magnet_scope/waveforms-local/princeton-magnet-scope-n87-25c-0-1-1.h5": {
+      "sha256": "f79e541f99e30dc7c80b80bcb939ee64201fc72851eb20a0a14df249d27965b3",
+      "size": 9704022
+    },
+    "normalized/v0.2/princeton_magnet_scope/waveforms-local/princeton-magnet-scope-n87-70c-1-2-6.h5": {
+      "sha256": "e9d57210635e636c8377182ce3dfbed8abad044757f3b7c8843000b1ba66193d",
+      "size": 8903418
+    },
+    "normalized/v0.2/princeton_magnet_scope/waveforms/waveforms-001.jsonl": {
+      "sha256": "9e157fff52403094d9746cc89c18fd1db7b3a123231028d0d5ee5f370090d0e4",
+      "size": 17692
     },
     "normalized/v0.2/zenodo_10725890_inrim/datasets/zenodo-10725890.json": {
       "sha256": "f17e660db942f29378a8eb52517ed21b7504958f44de563dadc3d77179784753",
@@ -1144,6 +1184,46 @@
       "sha256": "263c0087f6f43ccfd1b338d105abb6b9432be2cb85c59528539317f99b25bd63",
       "size": 9154016
     },
+    "raw/princeton_magnet_scope/SOURCES.json": {
+      "sha256": "2b387b21ad481597fa03e5e8ce75c1916b9dff8914682322898b349716e778f5",
+      "size": 4492
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/25/0_1_1_Data_Curr.csv": {
+      "sha256": "c613cceeb39f458d56ef9643fdad1416bc859e7f15d7f31289be58f21b7c4ba2",
+      "size": 15203426
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/25/0_1_1_Data_Time.csv": {
+      "sha256": "61af372393c0c935fbe42f2befa7c6de37d852fa123d3c9edfcaf2a3e2cd5219",
+      "size": 11909691
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/25/0_1_1_Data_Volt.csv": {
+      "sha256": "c938b72923c656dd0b11128d8f9181251e85a7ad83eabece40e4b9791ef4ad13",
+      "size": 5913012
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/25/0_1_1_Parameters.csv": {
+      "sha256": "824422ac58c2cb141380dc2db3e1ffb78a3b24522fef3abe52fb46c460bb5596",
+      "size": 3468
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/70/1_2_6_Data_Curr.csv": {
+      "sha256": "32c2c2c6b496180c42c960644c9abbf7257134ca6f3351769212f17801b974e8",
+      "size": 12001402
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/70/1_2_6_Data_Time.csv": {
+      "sha256": "eb1a013caced6dad5a008ac5c3eab02327a7974653e2f4a991a312330a133872",
+      "size": 11919692
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/70/1_2_6_Data_Volt.csv": {
+      "sha256": "1c2338dc25f0df06dc2a892128e26bf74da5278ac2cf974b8fbf60e906eb8147",
+      "size": 5748830
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/70/1_2_6_Parameters.csv": {
+      "sha256": "2a46daf04bb0713a40078ab4d878da5b963576da1677760dd19e8a241b20e954",
+      "size": 3279
+    },
+    "raw/princeton_magnet_scope/files/scripts/data_processing_files_and_example/N87/R34.0X20.5X12.5/Dataset1/Test_Info.xlsx": {
+      "sha256": "209e434c89b2a58d00d9013089ae8c24a0ca89bd92b9d41abaf5627a3515ded6",
+      "size": 10440
+    },
     "raw/zenodo_10725890_inrim/SOURCES.json": {
       "sha256": "2ba56afbf9f16e29dd311fbb97f23e7310ab03b5df3b647dd8fa8efb62055572",
       "size": 732
@@ -1243,6 +1323,194 @@
     "raw/zenodo_8292861_hefmag/files/EMPIR 19ENG06 HEFMAG dataset Co67 & Fmet.zip": {
       "sha256": "95c457de0ad4e28a1055772678cfcbbd5791d03efa7c18f73e80966a3004758a",
       "size": 120075
+    },
+    "tabular/v0.2/amplitude_permeability/openmagnetics_mas.parquet": {
+      "sha256": "137d14c0519442104741f536fa6063159ad22f1b6d0fdb210b649c0c87d5087a",
+      "size": 34173
+    },
+    "tabular/v0.2/amplitude_permeability/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "d84e0c04e9364ce37d25ca49897036ee10e76dd5cf4b60ef211575f963c19c17",
+      "size": 16896
+    },
+    "tabular/v0.2/bh_curve/openmagnetics_mas.parquet": {
+      "sha256": "975ccb362a562698c4be7277d9a832076537aa5fa56e6c2c7d1cb8b683e6a89a",
+      "size": 338466
+    },
+    "tabular/v0.2/bh_curve/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "bb50b5a053a9014e56fe3a441eacf935cc4dac38e6c9b36f74cb173ebdfe4356",
+      "size": 42228
+    },
+    "tabular/v0.2/bh_curve/zenodo_10725890_inrim.parquet": {
+      "sha256": "bb0d45ace9304b0ee9b2da65faba8868b48faed470373f948991e95e5e9dfb62",
+      "size": 15358
+    },
+    "tabular/v0.2/complex_permeability/nabih_magneto.parquet": {
+      "sha256": "170c98ca033700fd44d8b23cb4730b05d8471048d3d18047fc2762683599fa15",
+      "size": 28994
+    },
+    "tabular/v0.2/complex_permeability/openmagnetics_mas.parquet": {
+      "sha256": "2a61648f119e6a3ecc06df95c1c21358a2fd1cf6a18881eef657238d637e00c1",
+      "size": 1169148
+    },
+    "tabular/v0.2/complex_permeability/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "0404918bf8edfc7127d8a41b3430738a3f6ad4ed512a79853ecf5b5ede88e718",
+      "size": 1082302
+    },
+    "tabular/v0.2/complex_permeability/zenodo_8292861_hefmag.parquet": {
+      "sha256": "673e0eda76e0881e1145a758114489aa49ca543847105be33bae88f87b99b252",
+      "size": 73263
+    },
+    "tabular/v0.2/complex_permittivity/nabih_magneto.parquet": {
+      "sha256": "40d862dc96e3dea8793b05c6d2829bf4a175648869786700b7a55437de8fde01",
+      "size": 25286
+    },
+    "tabular/v0.2/complex_permittivity/openmagnetics_mas.parquet": {
+      "sha256": "3a1140b476b9572b7f2d3669ced597e2326f4a25aaa8c92d424a7ac82d211dcb",
+      "size": 7510
+    },
+    "tabular/v0.2/complex_permittivity/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "af48d8dad21b3cefa0ae2286b7f3147dca78e7a848283ab56d9941bec8192480",
+      "size": 343238
+    },
+    "tabular/v0.2/core_loss/nabih_magneto.parquet": {
+      "sha256": "aac8890739fdf54b1f99489dba9f0885230a5476b959895656207ec1970ef19a",
+      "size": 21753
+    },
+    "tabular/v0.2/core_loss/openmagnetics_mas.parquet": {
+      "sha256": "d55c8373def54c9533a60ffe3cc3198bb1cab504b02b6c87292f665948d05349",
+      "size": 484191
+    },
+    "tabular/v0.2/core_loss/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "33f8d2eb7853acc54a1422f9666eac9b41ce1cb8370d3604a1dadfb917baed27",
+      "size": 46472
+    },
+    "tabular/v0.2/core_loss/princeton_magnet.parquet": {
+      "sha256": "d708009ed595356bfc3daeba45b083f04aa699ed09dafd113c2377986fbd0d25",
+      "size": 4695759
+    },
+    "tabular/v0.2/core_loss/zenodo_7368936_cwh_n87.parquet": {
+      "sha256": "a0c39ac72daa5b2272b203f7b8082deee4125cfd0ad75c9dc466ad021f58a060",
+      "size": 4935890
+    },
+    "tabular/v0.2/cores/openmagnetics_mas.parquet": {
+      "sha256": "bba21dd5a464d84e70adadd8ec754df1ed86f5909e02e195a8ae7153d65109f6",
+      "size": 408492
+    },
+    "tabular/v0.2/dielectric_properties/guillod_n87_dielectric.parquet": {
+      "sha256": "26092119d70389045a1baf7dc9469e4f496170e1df79c11f6511f9151158140d",
+      "size": 24214
+    },
+    "tabular/v0.2/energy_loss/zenodo_21626116_smc_ferrite_triangular.parquet": {
+      "sha256": "b796cf458b8a99fecf4f72858efa30e3a62fd84ff96518cbbbab1a4724d2a7a5",
+      "size": 6952
+    },
+    "tabular/v0.2/energy_loss_and_permeability/zenodo_8292861_hefmag.parquet": {
+      "sha256": "b702e90cf325b07345a5c185d5e87d12031687d0c263fd576ae84868d21dbc9d",
+      "size": 25314
+    },
+    "tabular/v0.2/initial_permeability/openmagnetics_mas.parquet": {
+      "sha256": "6004482bab86ee58a40cdadd323286bec6d1c7735f1f67fb2a8ff1caf4853843",
+      "size": 104802
+    },
+    "tabular/v0.2/initial_permeability/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "d01ea00ef46d32061a77581804b0f36da73dcd5d07bf0031a14df44703a41833",
+      "size": 12538
+    },
+    "tabular/v0.2/loss_factor/openmagnetics_mas.parquet": {
+      "sha256": "7cc176a6589907f3ce04520fa13875a86a9c910d7e9b2dd8f08809f1b9975c75",
+      "size": 209202
+    },
+    "tabular/v0.2/mass_core_loss/openmagnetics_mas.parquet": {
+      "sha256": "b1138678e9f9d300454f56b803dd334ccf7ff0ed7a1d0f8a88a710072df12e5b",
+      "size": 21663
+    },
+    "tabular/v0.2/material_properties/openmagnetics_mas.parquet": {
+      "sha256": "085f6d3c94558775ff96778e2c0484baf52055dfb054de40cb105980d807a359",
+      "size": 146475
+    },
+    "tabular/v0.2/material_properties/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "e793616f63b20aab9acad27664e251399c06ad07963abcdb93a9af4373b89d2b",
+      "size": 7905
+    },
+    "tabular/v0.2/material_properties/zenodo_8292861_hefmag.parquet": {
+      "sha256": "ac578a30126ce37663262f992646493854798791b2ab6acf4fcba2a6251547bf",
+      "size": 6877
+    },
+    "tabular/v0.2/materials/guillod_n87_dielectric.parquet": {
+      "sha256": "9a03bd5f231ce74eccb78e379d75839d9271a2d84be493be3b921bb23704c859",
+      "size": 5892
+    },
+    "tabular/v0.2/materials/nabih_magneto.parquet": {
+      "sha256": "92b648f6988e634c35bdc7ada6bab428e9b76d7cc26373d2fb47f17cd3a0dd24",
+      "size": 6625
+    },
+    "tabular/v0.2/materials/openmagnetics_mas.parquet": {
+      "sha256": "e3646337879d7bd027737723f987a2f72576bdb0fa4bd1a1536b630fa75f4d0f",
+      "size": 43068
+    },
+    "tabular/v0.2/materials/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "0633d29c07d678724ea431279d6327c05b4e8c839627ac9a6b6809ea35f2cc5f",
+      "size": 6908
+    },
+    "tabular/v0.2/materials/princeton_magnet.parquet": {
+      "sha256": "a28d6e42bd07d0ce4877d853989718abb8270f7893940ba5430359f2bf99149f",
+      "size": 6449
+    },
+    "tabular/v0.2/materials/princeton_magnet_scope.parquet": {
+      "sha256": "4511aa051200339c4627c8204f879dd3319c0a1899b154c8c0179322e23f4ac6",
+      "size": 5987
+    },
+    "tabular/v0.2/materials/zenodo_10725890_inrim.parquet": {
+      "sha256": "0ae025289b84af5181022f6004ff1c9ff6d20e08fb69d09e01dadf95614c0243",
+      "size": 7330
+    },
+    "tabular/v0.2/materials/zenodo_21626116_smc_ferrite_triangular.parquet": {
+      "sha256": "9dd7c1d4c4c6ccbd7a6267ea8a85a494d22f34ea7a14aedebc6d5c5b7d688b33",
+      "size": 6400
+    },
+    "tabular/v0.2/materials/zenodo_7368936_cwh_n87.parquet": {
+      "sha256": "2eb5603b078d281fc5dcea025a770963f7d9649dae07f6e47287ed381ac5bbbe",
+      "size": 5972
+    },
+    "tabular/v0.2/materials/zenodo_8292861_hefmag.parquet": {
+      "sha256": "20f7f84c4284b4b069c148d071696170c611027560d9637d465c21585efcd75e",
+      "size": 6716
+    },
+    "tabular/v0.2/measurements/guillod_n87_dielectric.parquet": {
+      "sha256": "d592ff26c9aaf89bb6268566cc3ca2d277c0e0904dee21d664a381f65348f821",
+      "size": 12008
+    },
+    "tabular/v0.2/measurements/nabih_magneto.parquet": {
+      "sha256": "cd58f1bebb5d9c2b8ad9047f55f8831b5dc149f2a7171f7f9df37127194c86f0",
+      "size": 13992
+    },
+    "tabular/v0.2/measurements/openmagnetics_mas.parquet": {
+      "sha256": "1f545bd97f907f7d01fba1577a87db56c827d72781c7ae78553562f0dde58b8a",
+      "size": 62411
+    },
+    "tabular/v0.2/measurements/paderborn_lea_materialdatabase.parquet": {
+      "sha256": "0e00c27bdb6f00ad3ef9252178afb18f6d516bdd14c44338f6782ecc632d9ce1",
+      "size": 16912
+    },
+    "tabular/v0.2/measurements/princeton_magnet.parquet": {
+      "sha256": "bfc041a41d6ed9d116902360fdef14f517a1b69ceea3b894d55b1fdc24eef727",
+      "size": 19914
+    },
+    "tabular/v0.2/measurements/zenodo_10725890_inrim.parquet": {
+      "sha256": "9f138e219a366b54d31b992f938497fc4feee5b58176083459a1196ee75fcb4d",
+      "size": 12347
+    },
+    "tabular/v0.2/measurements/zenodo_21626116_smc_ferrite_triangular.parquet": {
+      "sha256": "2f07d639bad1579b21568b9742839bdf60b8adb60ea5e6c62c23a56946b9f1ba",
+      "size": 12217
+    },
+    "tabular/v0.2/measurements/zenodo_7368936_cwh_n87.parquet": {
+      "sha256": "ca00a2a54db1b7b19c5580a0950e9f08d34dd7e822ea9ed16ff0e8c3c2459f21",
+      "size": 12834
+    },
+    "tabular/v0.2/measurements/zenodo_8292861_hefmag.parquet": {
+      "sha256": "7a1a19b96ba9ea76f9bc1ef60c258c571f405f1897aebb794401ef61f4ad55d8",
+      "size": 13310
     }
   }
 }

@@ -3,6 +3,14 @@
 
 ## Unreleased
 
+- **Hugging Face release `485a5e9f`** (2026-11-27, recorded in `data/huggingface.json`, 344 files verified): the first
+  release with the tabular view and all 10 publishable sources, the MagNet oscilloscope waveforms included. It holds
+  867,331 table rows in 15 configs; `datasets.load_dataset` and pinned reads from this package were checked against it.
+- The rows of the 81 MAS B-H cycle tables (1,480,706 points) are not recoverable for now: the upstream Git LFS file is no
+  longer served at the pinned commit or at `main`, and the transfer asset that was meant to carry them was never
+  uploaded. The records stay, marked `rows_published = false` on Hugging Face; README and docs say so.
+- Fix: `hub stage` failed for a waveform-only source because waveform samples were counted as table rows.
+
 - **Licence**: the code is released under the MIT licence (`LICENSE`); it was `NOASSERTION` before. Third-party data keep
   the licence of their source and nothing is relicensed. AIPE's own data layer (selection, normalisation, canonical
   catalogue, quality flags, documentation) is offered under CC BY 4.0 to the extent AIPE holds rights in it. The curated
