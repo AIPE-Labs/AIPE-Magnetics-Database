@@ -5,7 +5,7 @@
     "priority": "A",
     "status": "integrated",
     "directory": null,
-    "url": "https://github.com/FulongLi/AIPE-Magnetics-Database/tree/main/src/aipe_magnetics_database/data/catalog",
+    "url": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database/tree/main/src/aipe_magnetics_database/data/catalog",
     "version": "0.2.0 catalogue",
     "license": "NOASSERTION",
     "redistribution": "values transcribed from manufacturer datasheets with locators",

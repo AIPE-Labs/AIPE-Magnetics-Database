@@ -1,6 +1,6 @@
 """Hugging Face storage layer of the AIPE Magnetics Database.
 
-The Hugging Face dataset ``FulongLi/AIPE-Magnetics-Dataset`` (Layer 1) stores the original source files, the
+The Hugging Face dataset ``AIPE-Labs/AIPE-Magnetics-Dataset`` (Layer 1) stores the original source files, the
 normalised v0.2 records, large table sidecars and the release manifests. This repository (Layer 2) builds the
 release (:mod:`.stage`), publishes it (:mod:`.publish`, GitHub Actions Trusted Publisher, never a stored token) and
 reads it back version-pinned (:mod:`.remote`; plain HTTPS through the SHA-256 verifying cache, so the optional

@@ -38,7 +38,7 @@ from aipe_magnetics_database.ingest.canonical import record_manufacturer  # noqa
 from aipe_magnetics_database.ingest.pipeline import curated_records  # noqa: E402
 from aipe_magnetics_database.store import MagneticDatabase  # noqa: E402
 
-REPOSITORY = "FulongLi/AIPE-Magnetics-Database"
+REPOSITORY = "AIPE-Labs/AIPE-Magnetics-Database"
 PREVIEW_ROWS = 5000
 GROUP_COLUMNS = ("waveform", "temperature", "specimen", "branch")
 HEADLINE = {"mu_i": "initial_permeability", "bsat": "saturation_flux_density", "rho": "resistivity", "density": "density",

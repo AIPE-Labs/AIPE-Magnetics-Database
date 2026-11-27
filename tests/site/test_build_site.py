@@ -109,7 +109,7 @@ def test_large_tables_are_labelled_samples_of_the_real_rows(site):
     key = lambda r: (r[names.index("waveform")], r[names.index("temperature")])  # noqa: E731
     assert {key(r) for r in page["rows"]} == {key(r) for r in full}
     assert page["links"]["rows_file"].endswith("/data/normalized/princeton-magnet/tables/princeton-magnet-n87-core-loss.jsonl")
-    assert page["links"]["rows_file"].startswith("https://raw.githubusercontent.com/FulongLi/AIPE-Magnetics-Database/0123456789abcdef/")
+    assert page["links"]["rows_file"].startswith("https://raw.githubusercontent.com/AIPE-Labs/AIPE-Magnetics-Database/0123456789abcdef/")
 
 
 def test_uncommitted_sidecars_are_listed_without_rows(site):

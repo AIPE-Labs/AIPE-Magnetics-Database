@@ -4,10 +4,10 @@
   "description": "Magnetic data expert: standardised material, core-geometry and measurement data with provenance and licences, served read-only by the aipe-magnetics-database Python package through its local MCP server.",
   "author": {
     "name": "Fulong Li",
-    "url": "https://github.com/FulongLi/AIPE-Magnetics-Database"
+    "url": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"
   },
-  "homepage": "https://github.com/FulongLi/AIPE-Magnetics-Database",
-  "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database",
+  "homepage": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database",
+  "repository": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database",
   "license": "MIT",
   "keywords": ["magnetics", "power-electronics", "core-loss", "ferrite", "dataset", "mcp"],
   "skills": "./skills/",
@@ -19,7 +19,7 @@
     "developerName": "AIPE (AI for Power Engineering)",
     "category": "Engineering",
     "capabilities": ["Read"],
-    "websiteURL": "https://github.com/FulongLi/AIPE-Magnetics-Database",
+    "websiteURL": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database",
     "defaultPrompt": [
       "Which measured core-loss tables cover TDK N87 at 100 kHz and 90 degC?",
       "Show the provenance of the Princeton MagNet 3C90 data",

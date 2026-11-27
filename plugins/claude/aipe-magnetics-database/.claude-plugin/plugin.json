@@ -4,10 +4,10 @@
   "description": "Magnetic data expert: standardised material, core-geometry and measurement data (Princeton MagNet, Paderborn LEA, OpenMagnetics MAS, HEFMAG and more) with provenance, licences and duplicate tracking, served read-only by the aipe-magnetics-database Python package through its local MCP server (no LLM arithmetic, no cloud services, no API keys).",
   "author": {
     "name": "Fulong Li",
-    "url": "https://github.com/FulongLi/AIPE-Magnetics-Database"
+    "url": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database"
   },
-  "homepage": "https://github.com/FulongLi/AIPE-Magnetics-Database",
-  "repository": "https://github.com/FulongLi/AIPE-Magnetics-Database",
+  "homepage": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database",
+  "repository": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database",
   "license": "MIT",
   "keywords": ["magnetics", "power-electronics", "core-loss", "ferrite", "dataset", "magnet", "mcp"],
   "skills": "./skills/",

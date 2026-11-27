@@ -6,7 +6,7 @@ domains: [power-electronics]
 description: "Standardised, provenance-tracked magnetic data: material properties, core geometries and parts, measured core-loss tables, complex permeability / permittivity and B-H curves from Princeton MagNet, Paderborn LEA, OpenMagnetics MAS, HEFMAG and further sources in Magnetic Data Schema v0.2, with deduplication, licences, query API, CLI and a read-only MCP server."
 status: experimental
 maturity: prototype
-repository: https://github.com/FulongLi/AIPE-Magnetics-Database
+repository: https://github.com/AIPE-Labs/AIPE-Magnetics-Database
 license: MIT
 capabilities:
   - magnetics-record-schema
@@ -77,7 +77,7 @@ connectors:
   - id: aipe-magnetics-database-mcp
     tool: mcp-python-sdk
     type: mcp
-    repository: https://github.com/FulongLi/AIPE-Magnetics-Database
+    repository: https://github.com/AIPE-Labs/AIPE-Magnetics-Database
     license: MIT
     status: experimental
     supported_versions: ["mcp>=2,<3"]

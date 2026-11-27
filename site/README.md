@@ -1,6 +1,6 @@
 # AIPE Magnetics Data Explorer (GitHub Pages)
 
-Static, read-only frontend for <https://fulongli.github.io/AIPE-Magnetics-Database/>. Plain HTML, CSS and JavaScript:
+Static, read-only frontend for <https://aipe-labs.github.io/AIPE-Magnetics-Database/>. Plain HTML, CSS and JavaScript:
 no framework, no build step, no third-party scripts. `assets/plot.js` is a small SVG plotter; `assets/app.js` holds
 the five sections (overview, materials, measurements, comparison, core catalogue) with hash routing, so the site works under the
 `/AIPE-Magnetics-Database/` sub-path.

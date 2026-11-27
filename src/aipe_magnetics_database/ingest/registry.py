@@ -20,7 +20,7 @@ from typing import Any
 SOURCES: list[dict[str, Any]] = [
     # ---- Priority A ---------------------------------------------------------------------------------------------
     {"id": "aipe_curated", "title": "AIPE curated datasheet catalogue (bundled with the package)", "priority": "A", "status": "integrated",
-     "directory": None, "url": "https://github.com/FulongLi/AIPE-Magnetics-Database/tree/main/src/aipe_magnetics_database/data/catalog",
+     "directory": None, "url": "https://github.com/AIPE-Labs/AIPE-Magnetics-Database/tree/main/src/aipe_magnetics_database/data/catalog",
      "version": "0.2.0 catalogue", "license": "NOASSERTION", "redistribution": "values transcribed from manufacturer datasheets with locators",
      "notes": "11 materials (incl. 1 synthetic), 6 cores, 4 families, 4 manufacturers; Steinmetz sets fitted to MagNet are 'measurement_fit'."},
     {"id": "openmagnetics_mas", "retrieved_at": "2026-11-02", "title": "OpenMagnetics / PSMA MAS", "priority": "A", "status": "integrated", "directory": "mas",

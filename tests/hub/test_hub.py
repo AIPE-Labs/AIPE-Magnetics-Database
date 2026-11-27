@@ -41,7 +41,7 @@ def test_layout_paths():
     with pytest.raises(ValueError):
         layout.raw_path("x", "../../escape")
     assert layout.resolve_url("o/r", "abc", "raw/x/a b.csv").endswith("/datasets/o/r/resolve/abc/raw/x/a%20b.csv")
-    assert layout.OIDC_RESOURCE == "datasets/FulongLi/AIPE-Magnetics-Dataset"
+    assert layout.OIDC_RESOURCE == "datasets/AIPE-Labs/AIPE-Magnetics-Dataset"
 
 
 def test_only_redistributable_integrated_sources_are_publishable():

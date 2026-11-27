@@ -34,16 +34,16 @@ Unknown arguments are rejected. Plugins for Claude Code (`plugins/claude/aipe-ma
 start this server; install the package first:
 
 ```sh
-pip install "aipe-magnetics-database[mcp] @ git+https://github.com/FulongLi/AIPE-Magnetics-Database.git"
+pip install "aipe-magnetics-database[mcp] @ git+https://github.com/AIPE-Labs/AIPE-Magnetics-Database.git"
 # Claude Code
-claude plugin marketplace add FulongLi/AIPE-Magnetics-Database
+claude plugin marketplace add AIPE-Labs/AIPE-Magnetics-Database
 claude plugin install aipe-magnetics-database@aipe-magnetics-database
 # Codex
-codex plugin marketplace add FulongLi/AIPE-Magnetics-Database
+codex plugin marketplace add AIPE-Labs/AIPE-Magnetics-Database
 codex plugin add aipe-magnetics-database@aipe-magnetics-database
 ```
 
 ## Web explorer
 
-<https://fulongli.github.io/AIPE-Magnetics-Database/> is a read-only static site generated from the same data store by
+<https://aipe-labs.github.io/AIPE-Magnetics-Database/> is a read-only static site generated from the same data store by
 `tools/build_site.py` and deployed by `.github/workflows/pages.yml`; see [site/README.md](../site/README.md).

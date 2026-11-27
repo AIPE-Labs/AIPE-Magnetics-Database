@@ -40,7 +40,7 @@ Third-party code dependencies (numpy BSD-3-Clause; pydantic, jsonschema, referen
 their licences. Public availability is not redistribution permission; rights holders may request removal of values
 through an issue.
 
-The Hugging Face dataset [FulongLi/AIPE-Magnetics-Dataset](https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset)
+The Hugging Face dataset [AIPE-Labs/AIPE-Magnetics-Dataset](https://huggingface.co/datasets/AIPE-Labs/AIPE-Magnetics-Dataset)
 republishes only the sources above whose licence permits redistribution (not the NOASSERTION curated catalogue); each
 `raw/<source-id>/` and `normalized/v0.2/<source-id>/` subtree and each `tabular/v0.2/<config>/<source-id>.parquet` file
 keeps its source licence (`LICENSE.md` there).

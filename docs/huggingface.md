@@ -4,7 +4,7 @@ The data live in three layers:
 
 | Layer | Repository | Role |
 | --- | --- | --- |
-| 1 | [`FulongLi/AIPE-Magnetics-Dataset`](https://huggingface.co/datasets/FulongLi/AIPE-Magnetics-Dataset) (Hugging Face) | storage: original files, normalised v0.2 records, large tables, manifests, versioned releases |
+| 1 | [`AIPE-Labs/AIPE-Magnetics-Dataset`](https://huggingface.co/datasets/AIPE-Labs/AIPE-Magnetics-Dataset) (Hugging Face) | storage: original files, normalised v0.2 records, large tables, manifests, versioned releases |
 | 2 | this repository | Database Manager: source registry, acquisition, importers, validation, quality checks, publishing, API / CLI / MCP, Data Explorer |
 | 3 | [AIPE-Magnetics-Design](https://github.com/FulongLi/AIPE-Magnetics-Design) | engineering application; reads data only through this package |
 
@@ -48,7 +48,7 @@ declares one config per table:
 
 ```python
 from datasets import load_dataset
-rows = load_dataset("FulongLi/AIPE-Magnetics-Dataset", "core_loss", split="train")
+rows = load_dataset("AIPE-Labs/AIPE-Magnetics-Dataset", "core_loss", split="train")
 ```
 
 - Values are the SI values of the records; nothing is computed, interpolated or dropped. Units and definitions are in
@@ -70,7 +70,7 @@ The view needs `pyarrow` at staging time (extra `hub`); `hub stage --no-tabular`
 1. **stage** (no publishing rights): restores the large `tables-local/` sidecars from pinned transfer assets
    (`hub restore-tables`), validates every record, downloads the pinned raw inputs into the SHA-256 verifying cache,
    builds the release tree (`hub stage`), re-hashes it (`hub verify-stage`) and fails on quality errors.
-2. **publish** (`permissions: id-token: write`, `HF_OIDC_RESOURCE=datasets/FulongLi/AIPE-Magnetics-Dataset`):
+2. **publish** (`permissions: id-token: write`, `HF_OIDC_RESOURCE=datasets/AIPE-Labs/AIPE-Magnetics-Dataset`):
    `huggingface_hub` exchanges the GitHub OIDC token for a one-hour token scoped to the dataset. No HF token is
    stored in GitHub and none is printed. `hub publish` then
    * re-verifies the stage, lists the Hub files and skips identical ones (repeated runs upload nothing),
@@ -88,7 +88,7 @@ Inputs: `mode` (`branch`, `main` or `pr`), `branch` (default `staging`), `merge`
 `ci-test` - the test publication; the first one succeeded at commit `3c9057f6` (20 files verified).
 
 The Trusted Publisher on the dataset (Settings -> Trusted Publishers -> GitHub Actions) must match
-`repository = FulongLi/AIPE-Magnetics-Database`, `workflow = publish-huggingface.yml` and, if a branch is set, the
+`repository = AIPE-Labs/AIPE-Magnetics-Database`, `workflow = publish-huggingface.yml` and, if a branch is set, the
 branch the workflow is dispatched on (`main`). It must not be read-only. On a mismatch the token exchange fails with
 `invalid_grant`; the job summary then lists the claims the run presented.
 
